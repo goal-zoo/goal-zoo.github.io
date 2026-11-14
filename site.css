@@ -1,4 +1,6 @@
-/* Shared by every page (privacy policy and support, EN and TR). No web fonts: the system's rounded font. */
+/* Shared by every page (privacy policy and support, in every language of the game). No web
+   fonts: the system's rounded font. Written by the game repo's `node scripts/site.mjs` from
+   site/site.css; spacing uses logical properties so the Arabic pages mirror by themselves. */
 :root {
   --sky: #5ec8f2;
   --deep: #1f86d4;
@@ -36,24 +38,13 @@ body {
   padding: 48px 24px 52px;
   text-align: center;
 }
-.hero img {
-  width: 96px;
-  height: 96px;
-  border-radius: 22%;
-  box-shadow: 0 8px 24px rgba(16, 60, 120, 0.3);
-}
+/* The game's logo: logo.png, a copy of the picture the game itself shows (the game repo's scripts/site.mjs puts it here). */
 .hero .brand {
-  margin-top: 14px;
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  line-height: 1;
-  -webkit-text-stroke: 1.5px var(--ink);
-  paint-order: stroke fill;
-  text-shadow: 0 3px 0 var(--ink);
+  display: block;
+  margin: 0 auto;
+  width: min(300px, 76vw);
+  height: auto;
 }
-.hero .brand .g { color: var(--yellow); }
-.hero .brand .z { color: var(--orange); }
 .hero h1 {
   margin-top: 14px;
   font-size: clamp(28px, 5vw, 40px);
@@ -74,7 +65,8 @@ body {
   justify-content: center;
   gap: 10px;
 }
-.hero .lang a {
+.hero .lang a,
+.hero .lang summary {
   color: #fff;
   text-decoration: none;
   border: 1.5px solid rgba(255,255,255,0.7);
@@ -85,7 +77,37 @@ body {
   line-height: 1.5;
   transition: background 0.2s;
 }
-.hero .lang a:hover { background: rgba(255,255,255,0.18); }
+.hero .lang a:hover,
+.hero .lang summary:hover { background: rgba(255,255,255,0.18); }
+/* The language menu: plain HTML (details/summary), no script. */
+.hero .lang details { flex: 0 1 100%; }
+.hero .lang summary {
+  display: inline-block;
+  cursor: pointer;
+  list-style: none;
+}
+.hero .lang summary::-webkit-details-marker { display: none; }
+.hero .lang summary::after { content: " ▾"; }
+.hero .lang details[open] summary::after { content: " ▴"; }
+.hero .lang .langs {
+  margin: 12px auto 0;
+  max-width: 560px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.hero .lang .langs a,
+.hero .lang .langs span {
+  border: 0;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.16);
+}
+.hero .lang .langs span { background: #fff; color: var(--deep); }
 main {
   max-width: 720px;
   margin: 0 auto;
@@ -104,7 +126,7 @@ main {
   margin-bottom: 40px;
 }
 .summary h2 { margin-top: 0; margin-bottom: 14px; }
-.summary ul { padding-left: 20px; }
+.summary ul { padding-inline-start: 20px; }
 .summary li { margin-bottom: 8px; }
 h2 {
   font-size: 22px;
@@ -114,9 +136,11 @@ h2 {
 }
 main > h2:first-child { margin-top: 0; }
 p { margin-bottom: 14px; }
-ul { margin: 0 0 14px 20px; }
+ul { margin: 0 0 14px; margin-inline-start: 20px; }
 li { margin-bottom: 6px; }
 strong { font-weight: 700; }
+/* Scripts without a real italic (the browser would only slant the letters): quoted names are set in a heavier weight instead. */
+:lang(ja) em, :lang(ko) em, :lang(zh) em, :lang(ar) em, :lang(hi) em { font-style: normal; font-weight: 600; }
 .mail { font-weight: 700; }
 table {
   width: 100%;
@@ -125,13 +149,18 @@ table {
   margin: 18px 0;
 }
 th, td {
-  text-align: left;
+  text-align: start;
   padding: 10px 12px;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
 th { font-weight: 700; color: var(--muted); font-size: 13px; letter-spacing: 0.02em; }
 a { color: var(--link); }
+.translation {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
 footer {
   border-top: 1px solid var(--border);
   margin-top: 56px;
